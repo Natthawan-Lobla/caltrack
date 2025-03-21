@@ -1,3 +1,4 @@
+import 'package:caltrack/main_screen.dart';
 import 'package:flutter/material.dart';
 
 class CalculationResultScreen extends StatelessWidget {
@@ -26,7 +27,12 @@ class CalculationResultScreen extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MainScreen()),
+                );
+              },
               child: const Text("Ready"),
             ),
           ],
