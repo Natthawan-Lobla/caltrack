@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1079312687821",
+    "project_id": "caltrack-adf35",
+    "storage_bucket": "caltrack-adf35.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1079312687821:android:6b0ac26129bed396d83f84",
+        "android_client_info": {
+          "package_name": "com.example.caltrack"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjmSiEbZoWH4mevSVn83-GlqxeJNwUnIA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
