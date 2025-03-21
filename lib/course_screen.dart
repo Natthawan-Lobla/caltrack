@@ -1,3 +1,5 @@
+import 'package:caltrack/categories_screen.dart';
+import 'package:caltrack/note_screen.dart';
 import 'package:flutter/material.dart';
 
 
@@ -7,7 +9,7 @@ class CourseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.yellow[100],
+      backgroundColor: Colors.amber[50],
       appBar: AppBar(
         backgroundColor: Colors.blue,
         title: Text('Breakfast'),
@@ -29,14 +31,35 @@ class CourseScreen extends StatelessWidget {
             ),
             SizedBox(height: 16.0),
  
-            // Categories Row
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                CategoryCard(icon: Icons.category, label: 'Categories'),
-                CategoryCard(icon: Icons.note, label: 'Notes'),
-                CategoryCard(icon: Icons.restaurant, label: 'Meals'),
-              ],
+           // Categories Row
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              // Categories Button
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const CategoriesScreen()),
+                  );
+                },
+                child: CategoryCard(icon: Icons.category, label: 'Categories'),
+              ),
+
+              // Notes Button
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const NotesScreen()),
+                  );
+                },
+                child: CategoryCard(icon: Icons.note, label: 'Notes'),
+              ),
+
+              // Meals Button (ยังไม่กำหนดการนำทาง)
+              CategoryCard(icon: Icons.restaurant, label: 'Meals'),
+            ],
             ),
             SizedBox(height: 16.0),
  

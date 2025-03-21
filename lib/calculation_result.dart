@@ -1,4 +1,4 @@
-import 'package:caltrack/main_screen.dart';
+import 'package:caltrack/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 
 class CalculationResultScreen extends StatelessWidget {
@@ -30,7 +30,7 @@ class CalculationResultScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const MainScreen()),
+                  MaterialPageRoute(builder: (context) => const DashboardScreen()),
                 );
               },
               child: const Text("Ready"),
