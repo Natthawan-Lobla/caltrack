@@ -7,8 +7,15 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.amber[50],
-      body: Column(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.blue, Color(0xFFFDF1DC)], // ปรับสีให้เหมือนดีไซน์
+          ),
+        ),
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset('assets/images/salad.png', height: 200), // เปลี่ยนเป็น path รูปของคุณ
@@ -27,6 +34,7 @@ class WelcomeScreen extends StatelessWidget {
           ),
         ],
       ),
+    )
     );
   }
 }

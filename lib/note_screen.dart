@@ -6,7 +6,15 @@ class NotesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
+      home: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.blue, Color(0xFFFDF1DC)], // ปรับสีให้เหมือนดีไซน์
+          ),
+        ),
+      child: Scaffold(
         appBar: AppBar(
           title: Text('Meal Planner'),
         ),
@@ -70,6 +78,7 @@ class NotesScreen extends StatelessWidget {
           ),
         ),
       ),
+    )
     );
   }
 }

@@ -4,8 +4,15 @@ class UserInfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFDF3DC),
-      body: SingleChildScrollView(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.blue, Color(0xFFFDF1DC)], // ปรับสีให้เหมือนดีไซน์
+          ),
+        ),
+      child: SingleChildScrollView(
         child: Column(
           children: [
             // Profile Section
@@ -91,6 +98,7 @@ class UserInfoScreen extends StatelessWidget {
           ],
         ),
       ),
+    )
     );
   }
 

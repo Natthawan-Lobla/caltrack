@@ -29,8 +29,15 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.amber[50],
-      body: Center(
+     body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.blue, Color(0xFFFDF1DC)], // ปรับสีให้เหมือนดีไซน์
+          ),
+        ),
+      child: Center(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
@@ -53,6 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
+    )
     );
   }
 }
