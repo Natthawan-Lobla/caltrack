@@ -54,7 +54,7 @@ class GenderScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const UserInfoScreen()),
+                  MaterialPageRoute(builder: (context) => UserInfoScreen()),
                 );
               },
               child: const Text("Next"),
