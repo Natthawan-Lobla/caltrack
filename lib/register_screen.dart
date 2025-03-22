@@ -29,8 +29,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.amber[50],
-      body: Center(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.blue, Color(0xFFFDF1DC)], // ปรับสีให้เหมือนดีไซน์
+          ),
+        ),
+      child: Center(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
@@ -46,7 +53,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(height: 10),
               TextButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.pop(context, 
+                MaterialPageRoute(builder: (context) => LoginScreen()));
                 },
                 child: const Text("Already have an account? Sign in"),
               ),
@@ -54,6 +62,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
         ),
       ),
+    )
     );
   }
 }

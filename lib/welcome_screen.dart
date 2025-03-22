@@ -11,17 +11,16 @@ class WelcomeScreen extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset('assets/salad.png', height: 200), // เปลี่ยนเป็น path รูปของคุณ
           Image.asset('assets/images/salad.png', height: 200), // เปลี่ยนเป็น path รูปของคุณ
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
               Navigator.push(context, 
-                MaterialPageRoute(builder: (context) => const LoginScreen())
+                MaterialPageRoute(builder: (context) => LoginScreen())
               );
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue,
+              backgroundColor: Colors.lightBlue,
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
             ),
             child: const Text("Sign in | Sign up", style: TextStyle(fontSize: 18)),
