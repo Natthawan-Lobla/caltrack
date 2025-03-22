@@ -19,7 +19,7 @@ class UserInfoScreen extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 50,
-                    backgroundImage: AssetImage('assets/avatar.png'), // Replace with actual image
+                    backgroundImage: AssetImage('assets/profile.png'), // Replace with actual image
                   ),
                   SizedBox(height: 10),
                   Row(
