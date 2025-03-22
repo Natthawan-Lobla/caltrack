@@ -46,7 +46,7 @@ class DashboardScreen extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => const CourseScreen()),
                     );
                   },
-                  child: Image.asset("assets/images/food_wheel.png", height: 500),
+                  child: Image.asset("assets/images/foodwheel.png", height: 500),
                 ),
 
                 // กล่องข้อมูลน้ำหนัก & แคลอรี่
