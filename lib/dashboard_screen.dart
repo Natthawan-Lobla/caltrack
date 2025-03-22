@@ -1,5 +1,6 @@
 import 'package:caltrack/course_screen.dart';
-import 'package:caltrack/profile_screen.dart';
+import 'package:caltrack/profiles_screen.dart';
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -167,7 +168,7 @@ class DashboardScreen extends StatelessWidget {
           if (index == 0) { // ถ้ากดปุ่ม Profile
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const ProfileScreen()),
+              MaterialPageRoute(builder: (context) => ProfilesScreen()),
             );
           }
         },
