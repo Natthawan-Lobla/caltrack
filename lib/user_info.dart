@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
 import 'goal_selection.dart';
 
-class UserInfoScreen extends StatelessWidget {
-  const UserInfoScreen({super.key});
+class UserInfoScreen extends StatefulWidget {
+  const UserInfoScreen({super.key, required String gender});
+
+  @override
+  _UserInfoScreenState createState() => _UserInfoScreenState();
+}
+
+class _UserInfoScreenState extends State<UserInfoScreen> {
+  final TextEditingController weightController = TextEditingController();
+  final TextEditingController heightController = TextEditingController();
+  final TextEditingController ageController = TextEditingController();
+  final TextEditingController targetWeightController = TextEditingController();
+  String gender = 'Male'; // ค่าเริ่มต้นเป็นผู้ชาย
 
   @override
   Widget build(BuildContext context) {
@@ -26,14 +37,34 @@ class UserInfoScreen extends StatelessWidget {
             _inputCard(),
             const SizedBox(height: 20),
             ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 12),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              ),
               onPressed: () {
+                double weight = double.tryParse(weightController.text) ?? 0;
+                double height = double.tryParse(heightController.text) ?? 0;
+                int age = int.tryParse(ageController.text) ?? 0;
+                double targetWeight = double.tryParse(targetWeightController.text) ?? 0;
+
+                double weightGainPerWeek = (targetWeight - weight) / 4; // สมมติแบ่งเป็น 4 สัปดาห์
+
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const GoalSelectionScreen()),
+                  MaterialPageRoute(
+                    builder: (context) => GoalSelectionScreen(
+                      weight: weight,
+                      height: height,
+                      age: age,
+                      targetWeight: targetWeight,
+                      weightGainPerWeek: weightGainPerWeek,
+                      gender: gender,
+                    ),
+                  ),
                 );
               },
-              child: const Text("Next"),
+              child: const Text("Next", style: TextStyle(fontSize: 16, color: Colors.white)),
             ),
           ],
         ),
@@ -48,11 +79,14 @@ class UserInfoScreen extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
-          children: const [
-            _InfoInputField(label: "Age", suffix: "Year"),
-            _InfoInputField(label: "Height", suffix: "Cm"),
-            _InfoInputField(label: "Weight", suffix: "Kg"),
-            _InfoInputField(label: "Target weight", suffix: "Kg"),
+          children: [
+            _InfoInputField(controller: ageController, label: "Age", suffix: "Year"),
+            const SizedBox(height: 10),
+            _InfoInputField(controller: heightController, label: "Height", suffix: "Cm"),
+            const SizedBox(height: 10),
+            _InfoInputField(controller: weightController, label: "Weight", suffix: "Kg"),
+            const SizedBox(height: 10),
+            _InfoInputField(controller: targetWeightController, label: "Target weight", suffix: "Kg"),
           ],
         ),
       ),
@@ -61,16 +95,22 @@ class UserInfoScreen extends StatelessWidget {
 }
 
 class _InfoInputField extends StatelessWidget {
+  final TextEditingController controller;
   final String label;
   final String suffix;
-  const _InfoInputField({required this.label, required this.suffix, super.key});
+
+  const _InfoInputField({required this.controller, required this.label, required this.suffix, super.key});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       decoration: InputDecoration(
         labelText: label,
         suffixText: suffix,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+        filled: true,
+        fillColor: Colors.white,
       ),
       keyboardType: TextInputType.number,
     );

@@ -62,7 +62,7 @@ class CourseScreen extends StatelessWidget {
             ],
             ),
             SizedBox(height: 16.0),
- 
+
             // Latest Menu Section
             Container(
               padding: EdgeInsets.all(8.0),

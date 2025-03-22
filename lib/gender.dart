@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'user_info.dart';
 
-class GenderScreen extends StatelessWidget {
+class GenderScreen extends StatefulWidget {
   const GenderScreen({super.key});
 
- @override
+  @override
+  _GenderScreenState createState() => _GenderScreenState();
+}
+
+class _GenderScreenState extends State<GenderScreen> {
+  String? selectedGender;
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -12,7 +19,7 @@ class GenderScreen extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Colors.blue, Color(0xFFFDF1DC)], // ปรับสีให้เหมือนดีไซน์
+            colors: [Colors.blue, Color(0xFFFDF1DC)],
           ),
         ),
         child: Column(
@@ -24,39 +31,35 @@ class GenderScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
 
-            // ใช้ Row เพื่อให้รูปภาพอยู่ข้างกัน
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset("assets/images/girl.png", height: 150),
-                const SizedBox(width: 20), // ระยะห่างระหว่างรูป
-                Image.asset("assets/images/boy.png", height: 150),
-              ],
-            ),
-
-            const SizedBox(height: 20), // เว้นระยะระหว่างรูปกับปุ่มเพศ
-
-            // ปุ่มเลือกเพศ
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _genderButton(Icons.female),
+                GestureDetector(
+                  onTap: () => setState(() => selectedGender = "Female"),
+                  child: _genderImage("assets/images/girl.png", selectedGender == "Female"),
+                ),
                 const SizedBox(width: 20),
-                _genderButton(Icons.male),
+                GestureDetector(
+                  onTap: () => setState(() => selectedGender = "Male"),
+                  child: _genderImage("assets/images/boy.png", selectedGender == "Male"),
+                ),
               ],
             ),
 
-            const SizedBox(height: 20), // เว้นระยะระหว่างปุ่มเพศกับปุ่ม Next
+            const SizedBox(height: 20),
 
-            // ปุ่ม Next
             ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => UserInfoScreen()),
-                );
-              },
+              onPressed: selectedGender != null
+                  ? () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UserInfoScreen(gender: selectedGender!),
+                        ),
+                      );
+                    }
+                  : null, // ปิดปุ่มถ้ายังไม่ได้เลือก
               child: const Text("Next"),
             ),
           ],
@@ -65,15 +68,13 @@ class GenderScreen extends StatelessWidget {
     );
   }
 
-  // Widget สำหรับปุ่มเลือกเพศ
-  Widget _genderButton(IconData icon) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        shape: const CircleBorder(),
-        padding: const EdgeInsets.all(20),
+  Widget _genderImage(String assetPath, bool isSelected) {
+    return Container(
+      decoration: BoxDecoration(
+        border: isSelected ? Border.all(color: Colors.blue, width: 3) : null,
+        borderRadius: BorderRadius.circular(10),
       ),
-      onPressed: () {},
-      child: Icon(icon, size: 30),
+      child: Image.asset(assetPath, height: 150),
     );
   }
 }

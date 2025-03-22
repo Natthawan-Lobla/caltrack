@@ -1,8 +1,31 @@
 import 'package:flutter/material.dart';
 import 'calculation_result.dart';
 
-class GoalSelectionScreen extends StatelessWidget {
-  const GoalSelectionScreen({super.key});
+class GoalSelectionScreen extends StatefulWidget {
+  final double weight;
+  final double height;
+  final int age;
+  final double targetWeight;
+  final double weightGainPerWeek;
+  final String gender;
+
+  const GoalSelectionScreen({
+    super.key,
+    required this.weight,
+    required this.height,
+    required this.age,
+    required this.targetWeight,
+    required this.weightGainPerWeek,
+    required this.gender,
+  });
+
+  @override
+  State<GoalSelectionScreen> createState() => _GoalSelectionScreenState();
+}
+
+class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
+  final List<String> goals = ["Very fast", "Fast", "Normal", "Gradual"];
+  int? selectedGoalIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -15,43 +38,65 @@ class GoalSelectionScreen extends StatelessWidget {
             colors: [Colors.blue, Color(0xFFFDF1DC)],
           ),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              "Results that you want each week",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  "Select Your Goal",
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
+                ),
+                const SizedBox(height: 20),
+                ToggleButtons(
+                  borderRadius: BorderRadius.circular(10),
+                  selectedColor: Colors.white,
+                  fillColor: Colors.blueAccent,
+                  color: Colors.blue,
+                  isSelected: List.generate(goals.length, (index) => index == selectedGoalIndex),
+                  onPressed: (index) {
+                    setState(() {
+                      selectedGoalIndex = index;
+                    });
+                  },
+                  children: goals.map((goal) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      child: Text(goal, style: const TextStyle(fontSize: 16)),
+                    );
+                  }).toList(),
+                ),
+                const SizedBox(height: 30),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: selectedGoalIndex != null ? Colors.blue : Colors.grey,
+                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  ),
+                  onPressed: selectedGoalIndex != null
+                      ? () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CalculationResultScreen(
+                                weight: widget.weight,
+                                height: widget.height,
+                                age: widget.age,
+                                targetWeight: widget.targetWeight,
+                                weightGainPerWeek: widget.weightGainPerWeek,
+                                gender: widget.gender,
+                              ),
+                            ),
+                          );
+                        }
+                      : null,
+                  child: const Text("View calculation results", style: TextStyle(fontSize: 16, color: Colors.white)),
+                ),
+              ],
             ),
-            const SizedBox(height: 20),
-            _goalButton("Very fast", "Weight gain 1 kg per week."),
-            _goalButton("Fast", "Weight gain 0.5 kg per week."),
-            _goalButton("Normal type (recommended)", "Weight gain 0.33 kg per week."),
-            _goalButton("Gradually", "Weight gain 0.25 kg per week."),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const CalculationResultScreen()),
-                );
-              },
-              child: const Text("View calculation results"),
-            ),
-          ],
+          ),
         ),
-      ),
-    );
-  }
-
-  Widget _goalButton(String title, String subtitle) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      child: ListTile(
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text(subtitle),
-        onTap: () {},
       ),
     );
   }
