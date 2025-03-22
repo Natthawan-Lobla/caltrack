@@ -1,84 +1,82 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart'; // ใช้สำหรับจัดรูปแบบวันที่
 
 class NotesScreen extends StatelessWidget {
   const NotesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.blue, Color(0xFFFDF1DC)], // ปรับสีให้เหมือนดีไซน์
-          ),
+    // ดึงวันที่ปัจจุบัน
+    String currentDate = DateFormat("d/M/yyyy").format(DateTime.now());
+
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: Text(
+          currentDate, // แสดงวันที่จริง
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Meal Planner'),
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Breakfast',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 8),
-                ListTile(
-                  title: Text('kcal'),
-                ),
-                ListTile(
-                  title: Text('kcal'),
-                ),
-                ListTile(
-                  title: Text('kcal'),
-                ),
-                ListTile(
-                  title: Text('kcal'),
-                ),
-                Divider(),
-                SizedBox(height: 16),
-                Text(
-                  'Lunch',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 8),
-                ListTile(
-                  title: Text('kcal'),
-                ),
-                ListTile(
-                  title: Text('kcal'),
-                ),
-                ListTile(
-                  title: Text('kcal'),
-                ),
-                ListTile(
-                  title: Text('kcal'),
-                ),
-                ListTile(
-                  title: Text('kcal'),
-                ),
-                Divider(),
-                SizedBox(height: 16),
-                Text(
-                  'Dinner',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 8),
-                ListTile(
-                  title: Text('kcal'),
-                ),
-              ],
+      ),
+      body: Container(
+        color: const Color(0xFFFDF1DC), // สีพื้นหลังเบจ
+        child: ListView(
+          children: [
+            buildMealSection("Breakfast"),
+            buildMealSection("Lunch"),
+            buildMealSection("Dinner"),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildMealSection(String title) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: const EdgeInsets.all(8.0),
+          color: Colors.grey[300], // สีเทาอ่อนหัวข้อ
+          child: Text(
+            title,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
             ),
           ),
         ),
+        buildMealItem(),
+        buildMealItem(),
+        buildMealItem(),
+      ],
+    );
+  }
+
+  Widget buildMealItem() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      color: Color(0xFFFDF1DC), // สีพื้นหลังเหมือนรูป
+      child: Column(
+        children: [
+          ListTile(
+            leading: Image.asset("assets/images/food.png"), // ไอคอนอาหาร
+            title: const Text("kcal", style: TextStyle(color: Colors.black87)),
+            trailing: IconButton(
+              icon: const Icon(Icons.cancel, color: Colors.grey),
+              onPressed: () {
+                // เพิ่มฟังก์ชันลบได้ที่นี่
+              },
+            ),
+          ),
+          const Divider(height: 1, color: Colors.grey), // เส้นแบ่ง
+        ],
       ),
-    )
     );
   }
 }

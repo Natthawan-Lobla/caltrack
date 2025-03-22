@@ -1,6 +1,6 @@
 import 'package:caltrack/course_screen.dart';
 import 'package:caltrack/profiles_screen.dart';
-import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+import 'package:caltrack/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -8,18 +8,23 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Container(
+        width: screenWidth,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Colors.blue, Color(0xFFFDF1DC)], // พื้นหลังสีเหมือนดีไซน์
+            colors: [Colors.blue, Color(0xFFFDF1DC)],
           ),
         ),
         child: SafeArea(
           child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 // Header
                 Padding(
@@ -47,13 +52,18 @@ class DashboardScreen extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => const CourseScreen()),
                     );
                   },
-                  child: Image.asset("assets/images/foodwheel.png", height: 500),
+                  child: Image.asset(
+                    "assets/images/foodwheel.png",
+                    width: screenWidth * 0.9,
+                    fit: BoxFit.contain,
+                  ),
                 ),
 
                 // กล่องข้อมูลน้ำหนัก & แคลอรี่
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                   child: Container(
+                    width: screenWidth * 0.95,
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -64,32 +74,43 @@ class DashboardScreen extends StatelessWidget {
                     ),
                     child: Column(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              children: [
-                                const Text("00 / 0 Kg.", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
-                                  onPressed: () {},
-                                  child: const Text("Record weight"),
-                                ),
-                              ],
+                        // น้ำหนักปัจจุบัน
+                        const Text(
+                          "00 / 0 Kg.",
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+
+                        // ปุ่ม Record weight
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+                          onPressed: () {},
+                          child: const Text("Record weight"),
+                        ),
+
+                        // เส้นคั่นเพื่อแยกข้อมูล
+                        const Divider(thickness: 1, color: Colors.grey),
+
+                        // ข้อมูล Calories
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: const [
+                            Text("Calories received from food", textAlign: TextAlign.center),
+                            Text(
+                              "+0000 kcal",
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Text("Calories received from food"),
-                                Text("+0000 kcal", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                                SizedBox(height: 10),
-                                Text("Burned from exercise"),
-                                Text("+0000 kcal", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                              ],
+                            SizedBox(height: 10),
+                            Text("Burned from exercise", textAlign: TextAlign.center),
+                            Text(
+                              "+0000 kcal",
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
+                        const Divider(thickness: 1, color: Colors.grey),
                         const SizedBox(height: 10),
+
+                        // Progress Bar & BMI
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: const [
@@ -107,6 +128,7 @@ class DashboardScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                   child: Container(
+                    width: screenWidth * 0.9,
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -134,6 +156,7 @@ class DashboardScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                   child: Container(
+                    width: screenWidth * 0.9,
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -146,12 +169,15 @@ class DashboardScreen extends StatelessWidget {
                       children: [
                         const Text("Amount of calories received per day"),
                         const SizedBox(height: 10),
-                        Image.asset("assets/images/calories_chart.png", height: 120),
+                        Image.asset(
+                          "assets/images/chart.png",
+                          width: screenWidth * 0.8,
+                          fit: BoxFit.contain,
+                        ),
                       ],
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 20),
               ],
             ),
@@ -165,16 +191,23 @@ class DashboardScreen extends StatelessWidget {
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white70,
         onTap: (index) {
-          if (index == 0) { // ถ้ากดปุ่ม Profile
+          if (index == 0) {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => ProfilesScreen()),
             );
           }
+          if (index == 1) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const WelcomeScreen()),
+              (route) => false,
+            );
+          }
         },
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: ""),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: ""),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+          BottomNavigationBarItem(icon: Icon(Icons.exit_to_app), label: "Exit"),
         ],
       ),
     );

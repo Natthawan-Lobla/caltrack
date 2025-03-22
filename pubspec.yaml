@@ -71,6 +71,12 @@ flutter:
   - assets/images/boy.png
   - assets/images/foodwheel.png
   - assets/images/profile.png
+  - assets/images/categories.png
+  - assets/images/food.png
+  - assets/images/chart.png
+  - assets/images/note.png
+  - assets/images/exercise.png
+  
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

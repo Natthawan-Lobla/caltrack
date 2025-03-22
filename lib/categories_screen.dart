@@ -6,29 +6,32 @@ class CategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: const Text(
+          "Breakfast",
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+        centerTitle: true,
+        elevation: 0, // ไม่ให้มีเงาด้านล่าง
+      ),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Colors.blue, Color(0xFFFDF1DC)], // ปรับสีพื้นหลังให้เหมือนดีไซน์
+            colors: [Colors.blue, Color(0xFFFDF1DC)], // พื้นหลังไล่สี
           ),
         ),
         child: Column(
           children: [
-            // แถบหัวข้อด้านบน
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              alignment: Alignment.center,
-              child: const Text(
-                "Breakfast",
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
-              ),
-            ),
-
             // ช่องค้นหา
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
               child: TextField(
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.search),
@@ -42,7 +45,6 @@ class CategoriesScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 10),
 
             // GridView สำหรับแสดงไอคอนอาหาร
             Expanded(
@@ -71,7 +73,7 @@ class CategoriesScreen extends StatelessWidget {
                       ),
                       child: Center(
                         child: Image.asset(
-                          "assets/images/food.png", // เปลี่ยนเป็น path ของรูปอาหาร
+                          "assets/images/categories.png", // เปลี่ยนเป็น path ของรูปอาหาร
                           height: 50,
                         ),
                       ),

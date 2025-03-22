@@ -24,8 +24,14 @@ class GoalSelectionScreen extends StatefulWidget {
 }
 
 class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
-  final List<String> goals = ["Very fast", "Fast", "Normal", "Gradual"];
   int? selectedGoalIndex;
+
+  final List<Map<String, String>> goals = [
+    {"title": "Very fast", "description": "Weight gain 1 kg per week."},
+    {"title": "Fast", "description": "Weight gain 0.5 kg per week."},
+    {"title": "Normal type (recommended)", "description": "Weight gain 0.33 kg per week."},
+    {"title": "Gradually", "description": "Weight gain 0.25 kg per week."},
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -38,41 +44,105 @@ class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
             colors: [Colors.blue, Color(0xFFFDF1DC)],
           ),
         ),
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text(
-                  "Select Your Goal",
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
+        child: SafeArea(
+          child: Column(
+            children: [
+              // ปุ่มย้อนกลับ
+              Padding(
+                padding: const EdgeInsets.only(left: 10, top: 10),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: IconButton(
+                    icon: const Icon(Icons.arrow_back, color: Colors.white, size: 28),
+                    onPressed: () => Navigator.pop(context),
+                  ),
                 ),
-                const SizedBox(height: 20),
-                ToggleButtons(
-                  borderRadius: BorderRadius.circular(10),
-                  selectedColor: Colors.white,
-                  fillColor: Colors.blueAccent,
-                  color: Colors.blue,
-                  isSelected: List.generate(goals.length, (index) => index == selectedGoalIndex),
-                  onPressed: (index) {
-                    setState(() {
-                      selectedGoalIndex = index;
-                    });
-                  },
-                  children: goals.map((goal) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      child: Text(goal, style: const TextStyle(fontSize: 16)),
+              ),
+              const SizedBox(height: 10),
+              // หัวข้อ
+              const Text(
+                "Results that you want each week",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+              ),
+              const SizedBox(height: 20),
+              // รายการตัวเลือก
+              Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  itemCount: goals.length,
+                  itemBuilder: (context, index) {
+                    bool isSelected = index == selectedGoalIndex;
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedGoalIndex = index;
+                        });
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(vertical: 8),
+                        padding: const EdgeInsets.all(15),
+                        decoration: BoxDecoration(
+                          color: isSelected ? Colors.blueAccent : Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 5,
+                              spreadRadius: 1,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              goals[index]["title"]!,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: isSelected ? Colors.white : Colors.black,
+                              ),
+                            ),
+                            const SizedBox(height: 5),
+                            Text(
+                              goals[index]["description"]!,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: isSelected ? Colors.white70 : Colors.black54,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     );
-                  }).toList(),
+                  },
                 ),
-                const SizedBox(height: 30),
-                ElevatedButton(
+              ),
+              // จุดบอกตำแหน่ง
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(
+                  goals.length,
+                  (index) => Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 20),
+                    width: 8,
+                    height: 8,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: selectedGoalIndex == index ? Colors.blueAccent : Colors.grey,
+                    ),
+                  ),
+                ),
+              ),
+              // ปุ่ม "View calculation results"
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: selectedGoalIndex != null ? Colors.blue : Colors.grey,
-                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                   ),
                   onPressed: selectedGoalIndex != null
                       ? () {
@@ -91,10 +161,13 @@ class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
                           );
                         }
                       : null,
-                  child: const Text("View calculation results", style: TextStyle(fontSize: 16, color: Colors.white)),
+                  child: const Text(
+                    "View calculation results",
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

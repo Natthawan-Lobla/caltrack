@@ -43,7 +43,7 @@ class CourseScreen extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => const CategoriesScreen()),
                   );
                 },
-                child: CategoryCard(icon: Icons.category, label: 'Categories'),
+                child: Image.asset("assets/images/categories.png",height: 50),
               ),
 
               // Notes Button
@@ -54,11 +54,11 @@ class CourseScreen extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => const NotesScreen()),
                   );
                 },
-                child: CategoryCard(icon: Icons.note, label: 'Notes'),
+                child: (Image.asset("assets/images/note.png",height: 50)),
               ),
 
               // Meals Button (ยังไม่กำหนดการนำทาง)
-              CategoryCard(icon: Icons.restaurant, label: 'Meals'),
+              (Image.asset("assets/images/food.png",height: 60)),
             ],
             ),
             SizedBox(height: 16.0),
@@ -98,7 +98,7 @@ class CategoryCard extends StatelessWidget {
   final IconData icon;
   final String label;
  
-  const CategoryCard({super.key, required this.icon, required this.label});
+  const CategoryCard({super.key, required this.icon, required this.label, required int height});
  
   @override
   Widget build(BuildContext context) {
