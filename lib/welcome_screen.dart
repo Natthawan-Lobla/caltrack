@@ -11,7 +11,11 @@ class WelcomeScreen extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+<<<<<<< HEAD
+          Image.asset('assets/salad.png', height: 200), // เปลี่ยนเป็น path รูปของคุณ
+=======
           Image.asset('assets/images/salad.png', height: 200), // เปลี่ยนเป็น path รูปของคุณ
+>>>>>>> e62576eca18cdd7d0affe66d4e8ccfe272efbcfe
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
