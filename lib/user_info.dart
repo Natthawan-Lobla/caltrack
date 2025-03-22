@@ -63,7 +63,7 @@ class UserInfoScreen extends StatelessWidget {
 class _InfoInputField extends StatelessWidget {
   final String label;
   final String suffix;
-  const _InfoInputField({required this.label, required this.suffix, super.key});
+  const _InfoInputField({required this.label, required this.suffix});
 
   @override
   Widget build(BuildContext context) {

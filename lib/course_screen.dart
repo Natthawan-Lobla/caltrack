@@ -98,7 +98,7 @@ class CategoryCard extends StatelessWidget {
   final IconData icon;
   final String label;
  
-  CategoryCard({required this.icon, required this.label});
+  const CategoryCard({super.key, required this.icon, required this.label});
  
   @override
   Widget build(BuildContext context) {
@@ -131,7 +131,7 @@ class MenuItem extends StatelessWidget {
   final String name;
   final String calories;
  
-  MenuItem({required this.name, required this.calories});
+  const MenuItem({super.key, required this.name, required this.calories});
  
   @override
   Widget build(BuildContext context) {
