@@ -1,3 +1,4 @@
+import 'package:caltrack/gender.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'register_screen.dart';
@@ -17,12 +18,22 @@ class _LoginScreenState extends State<LoginScreen> {
   void signIn() async {
     try {
       await _auth.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
       );
-      // ทำอะไรบางอย่างหลังจากเข้าสู่ระบบสำเร็จ เช่น ไปหน้า home
+
+      // เมื่อล็อคอินสำเร็จให้เปลี่ยนไปที่ GenderScreen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const GenderScreen()),
+      );
     } catch (e) {
-      print(e);
+      print("Error: $e");
+
+      // แสดงข้อความแจ้งเตือนถ้าล็อคอินไม่สำเร็จ
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Login Failed: ${e.toString()}")),
+      );
     }
   }
 
