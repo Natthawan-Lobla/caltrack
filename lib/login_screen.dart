@@ -1,3 +1,4 @@
+import 'package:caltrack/gender.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'register_screen.dart';
@@ -17,20 +18,37 @@ class _LoginScreenState extends State<LoginScreen> {
   void signIn() async {
     try {
       await _auth.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
       );
-      // ทำอะไรบางอย่างหลังจากเข้าสู่ระบบสำเร็จ เช่น ไปหน้า home
+
+      // เมื่อล็อคอินสำเร็จให้เปลี่ยนไปที่ GenderScreen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const GenderScreen()),
+      );
     } catch (e) {
-      print(e);
+      print("Error: $e");
+
+      // แสดงข้อความแจ้งเตือนถ้าล็อคอินไม่สำเร็จ
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Login Failed: ${e.toString()}")),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.amber[50],
-      body: Center(
+     body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.blue, Color(0xFFFDF1DC)], // ปรับสีให้เหมือนดีไซน์
+          ),
+        ),
+      child: Center(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
@@ -53,6 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
+    )
     );
   }
 }
