@@ -42,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
               TextField(controller: emailController, decoration: const InputDecoration(labelText: 'Email')),
               TextField(controller: passwordController, decoration: const InputDecoration(labelText: 'Password'), obscureText: true),
               const SizedBox(height: 20),
-              ElevatedButton(onPressed: signIn, child: const Text("Sign in")),
+              ElevatedButton(onPressed: signIn, child: const Text("Sign in"),),
               TextButton(
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterScreen()));
